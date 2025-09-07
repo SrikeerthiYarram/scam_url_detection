@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QMessageBox
-from app.dialogs.blacklist import load_blacklist,is_blacklisted
+from app.dialogs.blacklist import load_blacklist,is_blacklisted,add_to_blacklist
 from app.dialogs.whitelist import load_whitelist,is_whitelisted
 from app.dialogs.rule_editor import evaluate_url
 from app.dialogs.settings import SettingsDialog
