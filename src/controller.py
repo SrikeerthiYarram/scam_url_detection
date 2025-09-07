@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMessageBox
-from app.dialogs.blacklist import BlacklistDialog
-from app.dialogs.watchlist import WatchlistDialog
-from app.dialogs.rule_editor import RuleEditorDialog
+from app.dialogs.blacklist import load_blacklist,is_blacklisted
+from app.dialogs.whitelist import load_whitelist,is_whitelisted
+from app.dialogs.rule_editor import evaluate_url
 from app.dialogs.settings import SettingsDialog
 from app.dialogs.logs import LogsDialog
 
