@@ -1,22 +1,24 @@
+BLACKLIST_FILE = '../resources/icons/blacklist_urls.txt'  # your actual file
+
 def load_blacklist():
+    """Load blacklist dynamically from file"""
     try:
-        with open('../resources/icons/blacklist_urls.txt', 'r') as f:
-            return [line.strip() for line in f.readlines()]
+        with open(BLACKLIST_FILE, 'r') as f:
+            return [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
         print("Blacklist file not found.")
         return []
 
-def is_blacklisted(item):
+def is_blacklisted(url):
+    """Check if a URL is in the blacklist"""
     blacklist = load_blacklist()
-    return item in blacklist
+    for entry in blacklist:
+        if entry in url:
+            return True, entry  # matched entry
+    return False, None
 
-# Example usage
-if _name_ == "_main_":
-    blacklist_data = load_blacklist()
-    print("Blacklist:", blacklist_data)
-    
-    item_to_check = "example_url"
-    if is_blacklisted(item_to_check):
-        print(f"{item_to_check} is blacklisted.")
-    else:
-        print(f"{item_to_check} is not blacklisted.")
+def add_to_blacklist(url):
+    """Add a URL to the blacklist dynamically"""
+    with open(BLACKLIST_FILE, 'a') as f:
+        f.write(url + "\n")
+
