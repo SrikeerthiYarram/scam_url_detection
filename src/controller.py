@@ -27,25 +27,46 @@ class UIController:
         self.main_window.about_action.triggered.connect(self.show_about)
 
     def check_url(self):
-       
-        url = self.main_window.url_input.text().strip()
+    url = self.main_window.url_input.text().strip()
+    if not url:
+        QMessageBox.warning(self.main_window, "Missing URL", "Please enter a URL to check.")
+        return
 
-        
-        if not url:
-            QMessageBox.warning(self.main_window, "Missing URL", "Please enter a URL to check.")
-            return
+    self.main_window.statusBar().showMessage("Checking...")
+    self.main_window.check_btn.setEnabled(False)
 
-       
-        self.main_window.statusBar().showMessage("Checking...")
-        self.main_window.check_btn.setEnabled(False)
-
-     
+    # 1️⃣ Check dynamic blacklist first
+    blacklisted, domain = is_blacklisted(url)
+    if blacklisted:
         result = {
             "url": url,
-            "score": 0,
-            "verdict": "Safe",
-            "matched_rules": []
+            "score": 10,
+            "verdict": "Malicious",
+            "matched_rules": [
+                {"rule": "Blacklist match", "explanation": f"URL matches '{domain}'", "weight": 10}
+            ]
         }
+    else:
+        # 2️⃣ Optional: check whitelist
+        whitelisted = False
+        if 'is_whitelisted' in globals():  # if you have a whitelist
+            whitelisted = is_whitelisted(url)
+
+        if whitelisted:
+            result = {
+                "url": url,
+                "score": 0,
+                "verdict": "Safe",
+                "matched_rules": []
+            }
+        else:
+            # 3️⃣ Run heuristic rules
+            result = evaluate_url(url)  # your heuristics function
+
+    self.main_window.display_result(result)
+    self.main_window.check_btn.setEnabled(True)
+    self.main_window.statusBar().showMessage("Check complete.")
+
 
         
         self.main_window.display_result(result)
