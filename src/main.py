@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from controller import UIController
+from tests.controller import UIController
 import sys
 import datetime
 
