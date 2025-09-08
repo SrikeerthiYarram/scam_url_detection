@@ -31,7 +31,7 @@
 │   │   ├── 📄 main_window.py  # MainWindow UI class (skeleton)
 │   │   ├── 📂 dialogs/
 │   │   │   ├── 📄 blacklist.py   # Blacklist Manager dialog
-│   │   │   ├── 📄 watchlist.py
+│   │   │   ├── 📄 whitelist.py
 │   │   │   ├── 📄 rule_editor.py
 │   │   │   ├── 📄 settings.py
 │   │   │   └── 📄 logs.py
